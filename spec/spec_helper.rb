@@ -1,4 +1,7 @@
+$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require "bundler/setup"
+require "fluent/test"
+require "fluent/test/helpers"
 require "fluent/plugin/wmi"
 
 RSpec.configure do |config|
