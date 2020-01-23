@@ -1,10 +1,9 @@
 lib = File.expand_path("lib", __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "fluent/plugin/wmi/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "fluent-plugin-wmi"
-  spec.version       = Fluent::Plugin::Wmi::VERSION
+  spec.version       = "0.1.0"
   spec.authors       = ["Tada, Tadashi"]
   spec.email         = ["t@tdtds.jp"]
 
