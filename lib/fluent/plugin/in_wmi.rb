@@ -13,6 +13,10 @@ module Fluent::Plugin
 
     def start
       super
+      tag = "wmi.test"
+      time = Fluent::Engine.now
+      record = {"plugin"=>"wmi"}
+      router.emit(tag, time, record)
     end
 
     def shutdown
