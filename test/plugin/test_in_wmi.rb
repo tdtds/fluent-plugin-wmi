@@ -15,8 +15,9 @@ class WmiInputTest < Test::Unit::TestCase
 
       d.run(expect_emits: 1, timeout: 10)
       events = d.events
-      assert_equal("wmi.test", events[0][0])
-      assert_equal({"plugin"=>"wmi"}, events[0][2])
+      assert_equal("monitor.wmi", events[0][0])
+      assert_not_equal(0, events[0][2].length)
+      assert_equal("CPU", events[0][2][0]["role"])
     end
   end
 
