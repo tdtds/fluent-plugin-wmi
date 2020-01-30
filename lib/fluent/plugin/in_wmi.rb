@@ -8,18 +8,25 @@ module Fluent::Plugin
   class WmiInput < Fluent::Plugin::Input
     Fluent::Plugin.register_input("wmi", self)
 
+    desc "The value is the tag assigned to the generated events."
+    config_param :tag, :string
+
+    desc "The value is the instance name of WMI."
+    config_param :instance_of, :string
+
     def configure(conf)
       super
+
+      raise Fluent::ConfigError, "instance_of is required." unless @instance_of
     end
 
     def start
       super
       wmi = WmiLite::Wmi.new
-      instances = wmi.instances_of('Win32_Processor')
-      tag = "monitor.wmi"
+      instances = wmi.instances_of(@instance_of)
       time = Fluent::Engine.now
       record = instance_to_hash(instances)
-      router.emit(tag, time, record)
+      router.emit(@tag, time, record)
     end
 
     def shutdown
