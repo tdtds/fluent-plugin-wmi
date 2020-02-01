@@ -19,7 +19,7 @@ class WmiInputTest < Test::Unit::TestCase
       events = d.events
       assert_equal("monitor.wmi", events[0][0])
       assert_not_equal(0, events[0][2].length)
-      assert_equal("CPU", events[0][2][0]["role"])
+      assert_equal("CPU", events[0][2]["role"])
     end
   end
 

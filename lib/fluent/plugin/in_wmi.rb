@@ -23,23 +23,14 @@ module Fluent::Plugin
     def start
       super
       wmi = WmiLite::Wmi.new
-      instances = wmi.instances_of(@class_name)
       time = Fluent::Engine.now
-      record = instance_to_hash(instances)
-      router.emit(@tag, time, record)
+      wmi.instances_of(@class_name).each do |instance|
+        router.emit(@tag, time, instance.property_map)
+      end
     end
 
     def shutdown
       super
-    end
-
-  private
-    def instance_to_hash(instances)
-      a = []
-      instances.each do |instance|
-        a << instance.property_map
-      end
-      return a
     end
   end
 end
