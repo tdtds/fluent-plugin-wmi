@@ -6,20 +6,29 @@ class WmiInputTest < Test::Unit::TestCase
     Fluent::Test.setup
   end
 
-  CONFIG = %[
-    tag monitor.wmi
-    class_name Win32_Processor
-  ]
-
   sub_test_case 'plugin will emit a test event' do
     test 'test expects plugin emit a event' do
-      d = create_driver
+      d = create_driver %[
+        tag monitor.wmi
+        class_name Win32_Processor
+      ]
 
       d.run(expect_emits: 1, timeout: 10)
       events = d.events
       assert_equal("monitor.wmi", events[0][0])
       assert_not_equal(0, events[0][2].length)
       assert_equal("CPU", events[0][2]["role"])
+    end
+
+    test 'invalid class_name expects failur' do
+      d = create_driver %[
+        tag monitor.wmi
+        class_name Invalid_Class_Name
+      ]
+
+      assert_raise(WmiLite::WmiException) {
+        d.run(expect_emits: 1, timeout: 10)
+      }
     end
   end
 
