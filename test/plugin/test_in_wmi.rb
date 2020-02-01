@@ -8,7 +8,7 @@ class WmiInputTest < Test::Unit::TestCase
 
   CONFIG = %[
     tag monitor.wmi
-    instance_of Win32_Processor
+    class_name Win32_Processor
   ]
 
   sub_test_case 'plugin will emit a test event' do

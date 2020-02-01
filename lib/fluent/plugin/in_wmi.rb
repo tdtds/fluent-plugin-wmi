@@ -12,18 +12,18 @@ module Fluent::Plugin
     config_param :tag, :string
 
     desc "The value is the instance name of WMI."
-    config_param :instance_of, :string
+    config_param :class_name, :string
 
     def configure(conf)
       super
 
-      raise Fluent::ConfigError, "instance_of is required." unless @instance_of
+      raise Fluent::ConfigError, "class_name is required." unless @class_name
     end
 
     def start
       super
       wmi = WmiLite::Wmi.new
-      instances = wmi.instances_of(@instance_of)
+      instances = wmi.instances_of(@class_name)
       time = Fluent::Engine.now
       record = instance_to_hash(instances)
       router.emit(@tag, time, record)
