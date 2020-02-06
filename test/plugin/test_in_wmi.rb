@@ -19,9 +19,10 @@ class WmiInputTest < Test::Unit::TestCase
     end
 
     test 'invalid class_name value' do
-      assert_raise(Fluent::ConfigError) {
+      class_name = "Invalid_Class_Name"
+      assert_raise(Fluent::ConfigError.new("#{class_name} is invalid class_name.")) {
         create_driver CONF + %[
-          class_name Invalid_Class_Name
+          class_name #{class_name}
         ]
       }
     end
