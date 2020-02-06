@@ -24,7 +24,7 @@ module Fluent::Plugin
       rescue WmiLite::WmiException
         raise Fluent::ConfigError, "#{@class_name} is invalid class_name."
       end
-      raise Fluent::ConfigError, "interval must be large than 1." if @interval < 1
+      raise Fluent::ConfigError, "interval must be larger than 1." if @interval < 1
     end
 
     def start
